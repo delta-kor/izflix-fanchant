@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Bar from '../../components/actions/Bar';
 import PauseIcon from '../../icons/pause.svg';
 import PlayIcon from '../../icons/play.svg';
 import Store from '../../store/store';
@@ -52,12 +53,14 @@ interface Props {
 
 interface State {
   current: number;
+  total: number;
   playing: boolean;
 }
 
 class ChantPage extends Component<Props, State> {
   state: State = {
     current: 0,
+    total: 1,
     playing: false,
   };
 
@@ -71,11 +74,14 @@ class ChantPage extends Component<Props, State> {
 
   componentDidMount = () => {
     const media = this.mediaRef!.current;
+    media.addEventListener('play', () => this.setState({ playing: true }));
+    media.addEventListener('pause', () => this.setState({ playing: false }));
+    media.addEventListener('loadedmetadata', () =>
+      this.setState({ total: media.duration })
+    );
     this.mediaInterval = setInterval(() => {
       this.setState({ current: media.currentTime });
     }, 10);
-    media.addEventListener('play', () => this.setState({ playing: true }));
-    media.addEventListener('pause', () => this.setState({ playing: false }));
   };
 
   componentWillUnmount = () => {
@@ -87,6 +93,11 @@ class ChantPage extends Component<Props, State> {
     const current = this.state.playing;
     if (current) media.pause();
     else media.play();
+  };
+
+  moveTime = (time: number) => {
+    const media = this.mediaRef!.current;
+    media.currentTime = time;
   };
 
   render() {
@@ -108,6 +119,12 @@ class ChantPage extends Component<Props, State> {
           playsInline
         />
         <Cover />
+
+        <Bar
+          current={this.state.current}
+          total={this.state.total}
+          move={this.moveTime}
+        />
 
         {this.state.playing ? (
           <Pause onClick={this.togglePlayer} />
