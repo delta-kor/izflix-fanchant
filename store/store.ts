@@ -1,11 +1,19 @@
+type CheerItem =
+  | [string]
+  | [string, ...[number, string][]]
+  | [number, string][]
+  | [true, string];
+type Cheer = { [key: number]: CheerItem };
+
 interface ChantItem {
   id: string;
   title: string;
   album: string;
   artist: string;
   image: string;
+  video_gap: number;
   point: { time: number; name: string }[];
-  lyrics: any;
+  cheer: Cheer;
 }
 
 const chantItems: ChantItem[] = [
@@ -15,8 +23,9 @@ const chantItems: ChantItem[] = [
     album: 'OPEN',
     artist: '권은비',
     image: 'chant/eunbi-open.png',
+    video_gap: 0,
     point: [],
-    lyrics: {},
+    cheer: {},
   },
   {
     id: '09725c',
@@ -24,6 +33,7 @@ const chantItems: ChantItem[] = [
     album: 'Color',
     artist: '권은비',
     image: 'chant/eunbi-color.png',
+    video_gap: 50 / 1000,
     point: [
       { time: 15, name: 'Verse' },
       { time: 57, name: 'Chorus' },
@@ -32,7 +42,7 @@ const chantItems: ChantItem[] = [
       { time: 158, name: 'Bridge' },
       { time: 187, name: 'Outro' },
     ],
-    lyrics: {
+    cheer: {
       '1405': [
         [1405, '글리치'],
         [3883, '권은비'],
@@ -198,5 +208,5 @@ class Store {
   }
 }
 
-export type { ChantItem };
+export type { ChantItem, Cheer, CheerItem };
 export default Store;

@@ -1,6 +1,6 @@
 import React, { Component, MouseEvent, TouchEvent } from 'react';
 import styled from 'styled-components';
-import { Color } from '../../styles';
+import { Color, MobileQuery, PcQuery } from '../../styles';
 import { getDuration } from '../../time';
 
 const Layout = styled.div`
@@ -8,9 +8,18 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 4px;
-  left: 24px;
-  right: 24px;
   bottom: 76px;
+
+  ${MobileQuery} {
+    left: 24px;
+    right: 24px;
+  }
+
+  ${PcQuery} {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 720px;
+  }
 `;
 
 const Timer = styled.div<{ $angry: boolean }>`
