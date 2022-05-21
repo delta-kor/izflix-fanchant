@@ -33,7 +33,7 @@ const chantItems: ChantItem[] = [
     album: 'Color',
     artist: '권은비',
     image: 'chant/eunbi-color.png',
-    video_gap: 80 / 1000,
+    video_gap: 100 / 1000,
     point: [
       { time: 15, name: 'Verse' },
       { time: 57, name: 'Chorus' },
