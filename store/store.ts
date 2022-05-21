@@ -4,6 +4,7 @@ interface ChantItem {
   album: string;
   artist: string;
   image: string;
+  point: { time: number; name: string }[];
   lyrics: any;
 }
 
@@ -14,6 +15,7 @@ const chantItems: ChantItem[] = [
     album: 'OPEN',
     artist: '권은비',
     image: 'chant/eunbi-open.png',
+    point: [],
     lyrics: {},
   },
   {
@@ -22,6 +24,14 @@ const chantItems: ChantItem[] = [
     album: 'Color',
     artist: '권은비',
     image: 'chant/eunbi-color.png',
+    point: [
+      { time: 15, name: 'Verse' },
+      { time: 57, name: 'Chorus' },
+      { time: 86, name: 'Verse' },
+      { time: 130, name: 'Chorus' },
+      { time: 158, name: 'Bridge' },
+      { time: 187, name: 'Outro' },
+    ],
     lyrics: {
       '1405': [
         [1405, '글리치'],

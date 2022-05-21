@@ -36,6 +36,7 @@ const Play = styled(PlayIcon)`
   bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 const Pause = styled(PauseIcon)`
@@ -45,6 +46,7 @@ const Pause = styled(PauseIcon)`
   bottom: 36px;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 interface Props {
@@ -123,6 +125,7 @@ class ChantPage extends Component<Props, State> {
         <Bar
           current={this.state.current}
           total={this.state.total}
+          point={item.point}
           move={this.moveTime}
         />
 

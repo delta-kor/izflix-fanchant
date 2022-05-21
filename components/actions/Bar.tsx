@@ -13,22 +13,43 @@ const Layout = styled.div`
   bottom: 76px;
 `;
 
-const Timer = styled.div`
+const Timer = styled.div<{ $angry: boolean }>`
+  position: absolute;
   display: flex;
   justify-content: space-between;
+  top: ${({ $angry }) => ($angry ? '-14px' : '-6px')};
   width: 100%;
+  transition: top 0.2s;
 `;
 
 const Time = styled.div`
   font-weight: 700;
   font-size: 12px;
   color: ${Color.WHITE};
+  user-select: none;
+`;
+
+const Pointer = styled.div<{ $angry: boolean }>`
+  position: relative;
+  height: 14px;
+  opacity: ${({ $angry }) => ($angry ? '1' : '0')};
+  transition: opacity 0.2s;
+`;
+
+const Point = styled.div`
+  position: absolute;
+  top: 50%;
+  font-weight: 700;
+  font-size: 12px;
+  transform: translate(-50%, -50%);
+  user-select: none;
 `;
 
 const Content = styled.div`
   position: relative;
   width: 100%;
   height: 10px;
+  cursor: pointer;
 `;
 
 const BackBar = styled.div<{ $active: boolean }>`
@@ -64,6 +85,7 @@ const Indicator = styled.div<{ $active: boolean }>`
 interface Props {
   current: number;
   total: number;
+  point: { time: number; name: string }[];
   move(time: number): void;
 }
 
@@ -116,9 +138,12 @@ class Bar extends Component<Props, State> {
   onMouseUp = () => {
     this.setState({ down: false });
     document.removeEventListener('mousemove', this.onMouseMove);
+    document.removeEventListener('touchmove', this.onMouseMove);
   };
 
   render() {
+    const angry = this.state.active || this.state.down;
+
     return (
       <Layout
         onMouseEnter={() => this.setState({ active: true })}
@@ -126,20 +151,27 @@ class Bar extends Component<Props, State> {
         onTouchStart={this.onMouseDown}
         onMouseDown={this.onMouseDown}
       >
-        <Timer>
+        <Timer $angry={angry}>
           <Time>{getDuration(this.props.current)}</Time>
           <Time>{getDuration(this.props.total)}</Time>
         </Timer>
+        <Pointer $angry={angry}>
+          {this.props.point.map((item, index) => (
+            <Point
+              key={index}
+              style={{ left: (item.time / this.props.total) * 100 + '%' }}
+            >
+              {item.name}
+            </Point>
+          ))}
+        </Pointer>
         <Content>
-          <BackBar
-            $active={this.state.active || this.state.down}
-            ref={this.barRef}
-          >
+          <BackBar $active={angry} ref={this.barRef}>
             <Indicator
               style={{
                 width: (this.props.current / this.props.total) * 100 + '%',
               }}
-              $active={this.state.active || this.state.down}
+              $active={angry}
             />
           </BackBar>
         </Content>
