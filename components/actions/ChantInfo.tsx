@@ -97,7 +97,7 @@ class ChantInfo extends Component<Props> {
     const item = this.props.chantItem;
 
     return (
-      <Link href={`/chat/${item.id}`}>
+      <Link href={`/chant/${item.id}`}>
         <Layout>
           <Image src={item.image} />
           <Content>

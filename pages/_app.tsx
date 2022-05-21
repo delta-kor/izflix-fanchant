@@ -1,8 +1,11 @@
 import { AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import '../styles/global.css';
 
 export default function NextApp({ Component, pageProps }) {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -12,7 +15,7 @@ export default function NextApp({ Component, pageProps }) {
         />
       </Head>
       <AnimatePresence exitBeforeEnter>
-        <Component {...pageProps} />
+        <Component {...pageProps} key={router.route} />
       </AnimatePresence>
     </>
   );

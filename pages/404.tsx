@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Router } from 'next/router';
 import { Component } from 'react';
 import styled from 'styled-components';
 import NotFoundIcon from '../icons/not-found.svg';
@@ -55,15 +54,7 @@ const Back = styled.div`
   }
 `;
 
-interface Props {
-  router: Router;
-}
-
-class NotFoundPage extends Component<Props> {
-  onBack = () => {
-    this.props.router.push('/');
-  };
-
+class NotFoundPage extends Component {
   render() {
     return (
       <Page
