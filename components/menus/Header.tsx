@@ -5,9 +5,6 @@ import { Color, MobileQuery, PcQuery } from '../../styles';
 
 const Layout = styled.div`
   display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   align-items: center;
   user-select: none;
