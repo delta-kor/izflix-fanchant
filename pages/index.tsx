@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import styled from 'styled-components';
 import ChantInfo from '../components/actions/ChantInfo';
 import Header from '../components/menus/Header';
-import ChantItems from '../store/store';
+import Store from '../store/store';
 import { MobileQuery, PcQuery } from '../styles';
 
 const ChantInfoList = styled.div`
@@ -25,7 +25,7 @@ const IndexPage: NextPage = () => {
     <>
       <Header />
       <ChantInfoList>
-        {ChantItems.map((item) => (
+        {Store.getChantItems().map((item) => (
           <ChantInfo chantItem={item} />
         ))}
       </ChantInfoList>
