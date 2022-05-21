@@ -1,7 +1,12 @@
 import { NextPage } from 'next';
+import Header from '../components/menus/Header';
 
 const IndexPage: NextPage = () => {
-  return <h1>FANCHANT</h1>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 
 export default IndexPage;
