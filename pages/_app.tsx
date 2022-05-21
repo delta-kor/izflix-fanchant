@@ -1,4 +1,4 @@
-import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
 import '../styles/global.css';
 
@@ -11,11 +11,9 @@ export default function NextApp({ Component, pageProps }) {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
       </Head>
-      <AnimateSharedLayout>
-        <AnimatePresence>
-          <Component {...pageProps} />
-        </AnimatePresence>
-      </AnimateSharedLayout>
+      <AnimatePresence exitBeforeEnter>
+        <Component {...pageProps} />
+      </AnimatePresence>
     </>
   );
 }

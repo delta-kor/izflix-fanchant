@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Component } from 'react';
 import styled from 'styled-components';
 import GoIcon from '../../icons/go.svg';
@@ -96,18 +97,20 @@ class ChantInfo extends Component<Props> {
     const item = this.props.chantItem;
 
     return (
-      <Layout>
-        <Image src={item.image} />
-        <Content>
-          <Title>{item.title}</Title>
-          <Description>
-            <DescriptionContent>{item.album}</DescriptionContent>
-            <DescriptionDot />
-            <DescriptionContent>{item.artist}</DescriptionContent>
-          </Description>
-        </Content>
-        <Go />
-      </Layout>
+      <Link href={`/chat/${item.id}`}>
+        <Layout>
+          <Image src={item.image} />
+          <Content>
+            <Title>{item.title}</Title>
+            <Description>
+              <DescriptionContent>{item.album}</DescriptionContent>
+              <DescriptionDot />
+              <DescriptionContent>{item.artist}</DescriptionContent>
+            </Description>
+          </Content>
+          <Go />
+        </Layout>
+      </Link>
     );
   }
 }
