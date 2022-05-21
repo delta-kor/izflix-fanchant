@@ -90,7 +90,7 @@ const CheerText = styled.div`
 `;
 
 const CheerBlock = styled.div<{ $active: boolean }>`
-  color: ${({ $active }) => ($active ? Color.PRIMARY : Color.WHITE)};
+  color: ${({ $active }) => ($active ? Color.HIGHLIGHT : Color.WHITE)};
 `;
 
 interface Props {
@@ -101,6 +101,7 @@ interface State {
   current: number;
   total: number;
   playing: boolean;
+  loaded: boolean;
   cheer: CheerItem[];
 }
 
@@ -109,6 +110,7 @@ class ChantPage extends Component<Props, State> {
     current: 0,
     total: 1,
     playing: false,
+    loaded: false,
     cheer: [],
   };
 
@@ -125,7 +127,7 @@ class ChantPage extends Component<Props, State> {
     media.addEventListener('play', () => this.setState({ playing: true }));
     media.addEventListener('pause', () => this.setState({ playing: false }));
     media.addEventListener('loadedmetadata', () =>
-      this.setState({ total: media.duration })
+      this.setState({ total: media.duration, loaded: true })
     );
     this.mediaInterval = setInterval(() => {
       this.setState({ current: media.currentTime });
@@ -150,6 +152,11 @@ class ChantPage extends Component<Props, State> {
   };
 
   updateChant = () => {
+    if (!this.state.loaded) {
+      this.setState({ cheer: [['로딩중...']] });
+      return true;
+    }
+
     const item = Store.get(this.props.id);
     if (!item) return false;
 
