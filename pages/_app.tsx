@@ -1,5 +1,6 @@
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import Head from 'next/head';
+import '../styles/global.css';
 
 export default function NextApp({ Component, pageProps }) {
   return (
