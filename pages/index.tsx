@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { NextPage } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -68,6 +69,10 @@ const IndexPage: NextPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
+      <Head>
+        <title>FANCHANT - IZFLIX</title>
+        <meta property="og:title" content={'FANCHANT - IZFLIX'} />
+      </Head>
       <Header />
       <ChantInfoList>
         {Store.getChantItems().map((item) => (

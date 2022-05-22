@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { motion } from 'framer-motion';
+import Head from 'next/head';
 import Link from 'next/link';
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -330,6 +331,14 @@ class ChantPage extends Component<Props, State> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Head>
+          <title>{item.title} 응원법 | FANCHANT</title>
+          <meta
+            property="og:title"
+            content={`${item.title} 응원법 | FANCHANT`}
+          />
+        </Head>
+
         <Video
           // @ts-ignore
           ref={this.mediaRef}

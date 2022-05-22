@@ -32,6 +32,23 @@ export default class NextDocument extends Document {
       <Html lang={'ko'}>
         <Head>
           <>
+            <link rel="shortcut icon" href="/favicon.png" />
+            <link rel="icon" href="/favicon.png" />
+
+            <meta name="theme-color" content="#070d2d" />
+            <meta property="og:type" content="website" />
+            <meta
+              name="description"
+              content={'아이즈원 콘서트 응원법 연습하기'}
+            />
+            <meta
+              property="og:description"
+              content={'아이즈원 콘서트 응원법 연습하기'}
+            />
+            <meta property="og:image" content={'/og.png'} />
+            <meta name="twitter:image" content={'/og.png'} />
+            <meta name="twitter:card" content={'summary'} />
+
             <script
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
