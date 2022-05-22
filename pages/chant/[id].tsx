@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Bar from '../../components/actions/Bar';
@@ -51,9 +51,9 @@ const Pause = styled(PauseIcon)`
 
 const CheerContent = styled.div`
   position: absolute;
-  top: 50%;
+  bottom: calc(50vh - 64px);
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,10 +62,11 @@ const CheerContent = styled.div`
   row-gap: 16px;
 `;
 
-const CheerLine = styled.div`
+const CheerLine = styled(motion.div)`
   display: flex;
-  column-gap: 6px;
   font-weight: 800;
+  width: 100%;
+  justify-content: center;
 
   @media (max-width: 450px) {
     font-size: 18px;
@@ -79,18 +80,21 @@ const CheerLine = styled.div`
     font-size: 28px;
   }
 
-  :not(:first-of-type) {
-    opacity: 0.7;
-  }
+  /* :not(:first-of-type) {
+    opacity: 0.7 !important;
+  } */
 `;
 
 const CheerText = styled.div`
   font-weight: 400;
   color: ${Color.WHITE};
+  white-space: pre-wrap;
 `;
 
 const CheerBlock = styled.div<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? Color.HIGHLIGHT : Color.WHITE)};
+  white-space: pre-wrap;
+  transition: color 0.05s;
 `;
 
 interface Props {
@@ -162,7 +166,7 @@ class ChantPage extends Component<Props, State> {
 
     const gap = item.video_gap;
 
-    const current = this.state.current * 1000 + gap * 1000;
+    const current = this.state.current * 1000 + gap * 1000 + 100;
 
     const cheer = item.cheer;
     const timestamps = Object.keys(cheer).map(Number);
@@ -216,18 +220,53 @@ class ChantPage extends Component<Props, State> {
         <Cover />
 
         <CheerContent>
-          {this.state.cheer.map((item, index) => {
-            if (typeof item[0] === 'string') {
-              if (item.length === 1)
+          <AnimatePresence>
+            {this.state.cheer.map((item, index) => {
+              if (typeof item[0] === 'string') {
+                if (item.length === 1)
+                  return (
+                    <CheerLine
+                      key={item[0]}
+                      layoutId={item[0]}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1 }}
+                    >
+                      <CheerText>{item[0]}</CheerText>
+                    </CheerLine>
+                  );
                 return (
-                  <CheerLine key={index}>
+                  <CheerLine
+                    key={item[0]}
+                    layoutId={item[0]}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1 }}
+                  >
                     <CheerText>{item[0]}</CheerText>
+                    {item.slice(1).map((block, innerIndex) => (
+                      <CheerBlock
+                        key={innerIndex}
+                        $active={current * 1000 >= block[0]}
+                      >
+                        {block[1]}
+                      </CheerBlock>
+                    ))}
                   </CheerLine>
                 );
+              }
               return (
-                <CheerLine key={index}>
-                  <CheerText>{item[0]}</CheerText>
-                  {item.slice(1).map((block, innerIndex) => (
+                <CheerLine
+                  key={item[0][1]}
+                  layoutId={item[0][1]}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  {item.map((block, innerIndex) => (
                     <CheerBlock
                       key={innerIndex}
                       $active={current * 1000 >= block[0]}
@@ -237,20 +276,8 @@ class ChantPage extends Component<Props, State> {
                   ))}
                 </CheerLine>
               );
-            }
-            return (
-              <CheerLine key={index}>
-                {item.map((block, innerIndex) => (
-                  <CheerBlock
-                    key={innerIndex}
-                    $active={current * 1000 >= block[0]}
-                  >
-                    {block[1]}
-                  </CheerBlock>
-                ))}
-              </CheerLine>
-            );
-          })}
+            })}
+          </AnimatePresence>
         </CheerContent>
 
         <Bar
