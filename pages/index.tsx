@@ -33,6 +33,7 @@ const WaterMark = styled(WaterMarkIcon)`
   bottom: 32px;
   left: 50%;
   transform: translate(-50%);
+  cursor: pointer;
 `;
 
 const IndexPage: NextPage = () => {
