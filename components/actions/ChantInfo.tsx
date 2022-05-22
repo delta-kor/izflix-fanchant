@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Component } from 'react';
 import styled from 'styled-components';
 import GoIcon from '../../icons/go.svg';
+import LoadingIcon from '../../icons/loading.svg';
 import { ChantItem } from '../../store/store';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 
@@ -88,8 +89,32 @@ const Go = styled(GoIcon)`
   }
 `;
 
+const Loading = styled(LoadingIcon)`
+  animation: spin 2s infinite linear;
+
+  ${MobileQuery} {
+    width: 24px;
+    height: 24px;
+  }
+
+  ${PcQuery} {
+    width: 36px;
+    height: 36px;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 interface Props {
   chantItem: ChantItem;
+  loading: boolean;
 }
 
 class ChantInfo extends Component<Props> {
@@ -108,7 +133,7 @@ class ChantInfo extends Component<Props> {
               <DescriptionContent>{item.artist}</DescriptionContent>
             </Description>
           </Content>
-          <Go />
+          {this.props.loading ? <Loading /> : <Go />}
         </Layout>
       </Link>
     );

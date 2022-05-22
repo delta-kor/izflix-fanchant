@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ChantInfo from '../components/actions/ChantInfo';
 import Header from '../components/menus/Header';
@@ -24,6 +26,31 @@ const ChantInfoList = styled.div`
 `;
 
 const IndexPage: NextPage = () => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState<null | string>(null);
+
+  useEffect(() => {
+    const handleStart = (route: string) => {
+      if (route.startsWith('/chant/')) {
+        const id = route.split('/')[2];
+        setLoading(id);
+      }
+    };
+
+    const handleEnd = () => {
+      setLoading(null);
+    };
+
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleEnd);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleEnd);
+    };
+  });
+
   return (
     <Page
       exit={{ opacity: 0 }}
@@ -33,7 +60,11 @@ const IndexPage: NextPage = () => {
       <Header />
       <ChantInfoList>
         {Store.getChantItems().map((item) => (
-          <ChantInfo chantItem={item} key={item.id} />
+          <ChantInfo
+            chantItem={item}
+            loading={loading === item.id}
+            key={item.id}
+          />
         ))}
       </ChantInfoList>
     </Page>

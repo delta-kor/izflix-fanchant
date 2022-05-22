@@ -18,7 +18,7 @@ interface ChantItem {
 
 const chantItems: ChantItem[] = [
   {
-    id: '30cef8',
+    id: 'b1d121',
     title: 'Door',
     album: 'OPEN',
     artist: '권은비',
@@ -28,7 +28,7 @@ const chantItems: ChantItem[] = [
     cheer: {},
   },
   {
-    id: '09725c',
+    id: '125f32',
     title: 'Glitch',
     album: 'Color',
     artist: '권은비',

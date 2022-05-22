@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import React, { Component } from 'react';
@@ -141,6 +142,7 @@ interface IndexedCheerItem {
 
 interface Props {
   id: string;
+  src: string;
 }
 
 interface State {
@@ -164,9 +166,22 @@ class ChantPage extends Component<Props, State> {
     nextCheer: [],
   };
 
-  static getInitialProps = ({ query }) => {
+  static getInitialProps = async ({ query }) => {
     const id = query.id as string;
-    return { id };
+
+    const url = `https://api.izflix.net/viddeo/${id}?quality=1080&options=private`;
+    const response = await axios.get(url, { validateStatus: null });
+    const data = response.data;
+
+    if (!data.ok)
+      throw new AxiosError(
+        data.message ||
+          '서버 사용량이 많아 접속이 지연되고 있습니다\n잠시후 다시 시도해주세요'
+      );
+
+    const src = data.url;
+
+    return { id, src };
   };
 
   mediaRef = React.createRef<HTMLVideoElement | HTMLAudioElement>();
@@ -313,7 +328,7 @@ class ChantPage extends Component<Props, State> {
         animate={{ opacity: 1 }}
       >
         <Video
-          src={'https://v.iz-cdn.kro.kr/video/712332696'}
+          src={this.props.src}
           // @ts-ignore
           ref={this.mediaRef}
           playsInline
