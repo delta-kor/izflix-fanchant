@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ChantInfo from '../components/actions/ChantInfo';
 import Header from '../components/menus/Header';
+import WaterMarkIcon from '../icons/watermark.svg';
 import Store from '../store/store';
 import { MobileQuery, PcQuery } from '../styles';
 
@@ -23,6 +25,14 @@ const ChantInfoList = styled.div`
     margin: 0 auto;
     max-width: 540px;
   }
+`;
+
+const WaterMark = styled(WaterMarkIcon)`
+  position: fixed;
+  width: 186px;
+  bottom: 32px;
+  left: 50%;
+  transform: translate(-50%);
 `;
 
 const IndexPage: NextPage = () => {
@@ -67,6 +77,9 @@ const IndexPage: NextPage = () => {
           />
         ))}
       </ChantInfoList>
+      <Link href="https://izflix.net">
+        <WaterMark />
+      </Link>
     </Page>
   );
 };
