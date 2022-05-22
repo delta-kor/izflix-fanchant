@@ -90,6 +90,7 @@ const CheerLine = styled(motion.div)`
   font-weight: 800;
   width: 100%;
   justify-content: center;
+  text-align: center;
 
   @media (max-width: 450px) {
     font-size: 18px;
@@ -189,11 +190,13 @@ class ChantPage extends Component<Props, State> {
 
   componentDidMount = () => {
     const media = this.mediaRef!.current;
+
     media.addEventListener('play', () => this.setState({ playing: true }));
     media.addEventListener('pause', () => this.setState({ playing: false }));
     media.addEventListener('loadedmetadata', () =>
       this.setState({ total: media.duration, loaded: true })
     );
+    media.src = this.props.src;
     this.mediaInterval = setInterval(() => {
       this.setState({ current: media.currentTime });
       this.updateChant();
@@ -328,7 +331,6 @@ class ChantPage extends Component<Props, State> {
         animate={{ opacity: 1 }}
       >
         <Video
-          src={this.props.src}
           // @ts-ignore
           ref={this.mediaRef}
           playsInline
