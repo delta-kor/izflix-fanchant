@@ -99,10 +99,6 @@ const CheerLine = styled(motion.div)`
   @media (min-width: 811px) {
     font-size: 28px;
   }
-
-  /* :not(:first-of-type) {
-    opacity: 0.7 !important;
-  } */
 `;
 
 const CheerText = styled.div`
@@ -237,14 +233,15 @@ class ChantPage extends Component<Props, State> {
   createCheerLine = (
     indexedItem: IndexedCheerItem,
     current: number,
-    effect: boolean = false
+    effect: boolean,
+    strong: boolean = false
   ) => {
     const item = indexedItem.item;
     const index = indexedItem.index;
 
     const options: any = {
       initial: { opacity: 0 },
-      animate: { opacity: 1 },
+      animate: { opacity: strong ? 1 : 0.7 },
       transition: { duration: 0.5, ease: 'easeOut' },
     };
 
@@ -309,8 +306,8 @@ class ChantPage extends Component<Props, State> {
               .map((item) => this.createCheerLine(item, current, true))}
           </AdditionalCheerContent>
           <CheerContent>
-            {this.state.cheer.map((item) =>
-              this.createCheerLine(item, current)
+            {this.state.cheer.map((item, index) =>
+              this.createCheerLine(item, current, false, index === 0)
             )}
           </CheerContent>
           <AdditionalCheerContent>
