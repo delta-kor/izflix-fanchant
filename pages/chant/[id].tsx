@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Bar from '../../components/actions/Bar';
+import CloseIcon from '../../icons/close.svg';
 import PauseIcon from '../../icons/pause.svg';
 import PlayIcon from '../../icons/play.svg';
 import Store, { CheerItem } from '../../store/store';
-import { Color } from '../../styles';
+import { Color, MobileQuery, PcQuery } from '../../styles';
 import NotFoundPage from '../404';
 
 const Page = styled(motion.main)``;
@@ -111,6 +113,25 @@ const CheerBlock = styled.div<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? Color.HIGHLIGHT : Color.WHITE)};
   white-space: pre-wrap;
   transition: color 0.05s;
+`;
+
+const Close = styled(CloseIcon)`
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+
+  ${MobileQuery} {
+    width: 24px;
+    height: 24px;
+    top: 36px;
+  }
+
+  ${PcQuery} {
+    width: 36px;
+    height: 36px;
+    top: 48px;
+  }
 `;
 
 interface IndexedCheerItem {
@@ -329,6 +350,10 @@ class ChantPage extends Component<Props, State> {
         ) : (
           <Play onClick={this.togglePlayer} />
         )}
+
+        <Link href="/">
+          <Close />
+        </Link>
       </Page>
     );
   }
