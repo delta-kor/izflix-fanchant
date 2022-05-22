@@ -1,6 +1,6 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import { GA_TRACKING_ID } from '..//lib/gtag';
+import { GA_TRACKING_ID, isTrackable } from '..//lib/gtag';
 
 export default class NextDocument extends Document {
   static async getInitialProps(ctx) {
@@ -31,13 +31,15 @@ export default class NextDocument extends Document {
     return (
       <Html lang={'ko'}>
         <Head>
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
+          {isTrackable() && (
+            <>
+              <script
+                async
+                src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -46,8 +48,10 @@ export default class NextDocument extends Document {
               page_path: window.location.pathname,
             });
           `,
-            }}
-          />
+                }}
+              />
+            </>
+          )}
         </Head>
         <body>
           <Main />
