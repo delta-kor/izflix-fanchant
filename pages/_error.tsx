@@ -26,6 +26,8 @@ const Header = styled.div`
 
 const Title = styled.div`
   font-weight: bold;
+  white-space: pre-wrap;
+
   ${MobileQuery} {
     margin: 24px 0 0 0;
     font-size: 18px;
@@ -43,7 +45,7 @@ const Back = styled.div`
   border-radius: 4px;
   user-select: none;
   cursor: pointer;
-  
+
   ${MobileQuery} {
     padding: 12px 20px;
     margin: 54px 0 0 0;
