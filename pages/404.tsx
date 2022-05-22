@@ -42,6 +42,8 @@ const Back = styled.div`
   background: ${Color.PRIMARY};
   border-radius: 4px;
   user-select: none;
+  cursor: pointer;
+
   ${MobileQuery} {
     padding: 12px 20px;
     margin: 54px 0 0 0;

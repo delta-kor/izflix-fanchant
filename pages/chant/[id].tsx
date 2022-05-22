@@ -169,7 +169,7 @@ class ChantPage extends Component<Props, State> {
   static getInitialProps = async ({ query }) => {
     const id = query.id as string;
 
-    const url = `https://api.izflix.net/viddeo/${id}?quality=1080&options=private`;
+    const url = `https://api.izflix.net/video/${id}?quality=1080&options=private`;
     const response = await axios.get(url, { validateStatus: null });
     const data = response.data;
 
