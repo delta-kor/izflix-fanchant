@@ -264,8 +264,8 @@ class ChantPage extends Component<Props, State> {
       }
     }
 
-    if (previous.length === 0) previous.push({ index: -100, item: [''] });
-    if (next.length === 0) previous.push({ index: -200, item: [''] });
+    if (previous.length === 0) previous.push({ index: -100, item: [' '] });
+    if (next.length === 0) previous.push({ index: -200, item: [' '] });
 
     this.setState({ cheer: result, previousCheer: previous, nextCheer: next });
   };

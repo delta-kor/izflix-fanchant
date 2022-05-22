@@ -39,11 +39,11 @@ export default class NextDocument extends Document {
             <meta property="og:type" content="website" />
             <meta
               name="description"
-              content={'아이즈원 콘서트 응원법 연습하기'}
+              content={'아이즈원 콘서트 응원법 연습'}
             />
             <meta
               property="og:description"
-              content={'아이즈원 콘서트 응원법 연습하기'}
+              content={'아이즈원 콘서트 응원법 연습'}
             />
             <meta property="og:image" content={'/og.png'} />
             <meta name="twitter:image" content={'/og.png'} />
