@@ -495,7 +495,7 @@ const chantItems: ChantItem[] = [
         [189173, '컬'],
         [189590, '러'],
       ],
-      '189933': ['So catch me if you can'],
+      '192399': ['So catch me if you can'],
       '196511': ['I go ', [196899, 'up '], [197220, '& '], [197547, 'down']],
       '198229': [
         [198229, 'Left '],
