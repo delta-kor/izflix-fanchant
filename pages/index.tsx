@@ -11,7 +11,11 @@ import WaterMarkIcon from '../icons/watermark.svg';
 import Store from '../store/store';
 import { Color, MobileQuery, PcQuery } from '../styles';
 
-const Page = styled(motion.main)``;
+const Page = styled(motion.main)`
+  position: relative;
+  padding: 0 0 80px 0;
+  min-height: 100vh;
+`;
 
 const ChantInfoList = styled.div`
   display: flex;
@@ -29,7 +33,7 @@ const ChantInfoList = styled.div`
 `;
 
 const WaterMark = styled(WaterMarkIcon)`
-  position: fixed;
+  position: absolute;
   width: 186px;
   bottom: 32px;
   left: 50%;
