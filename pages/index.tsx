@@ -9,7 +9,7 @@ import ChantInfo from '../components/actions/ChantInfo';
 import Header from '../components/menus/Header';
 import WaterMarkIcon from '../icons/watermark.svg';
 import Store from '../store/store';
-import { MobileQuery, PcQuery } from '../styles';
+import { Color, MobileQuery, PcQuery } from '../styles';
 
 const Page = styled(motion.main)``;
 
@@ -35,6 +35,16 @@ const WaterMark = styled(WaterMarkIcon)`
   left: 50%;
   transform: translate(-50%);
   cursor: pointer;
+`;
+
+const InfoCard = styled.div`
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  background: ${Color.DARK_GRAY};
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
 `;
 
 const IndexPage: NextPage = () => {
@@ -75,6 +85,7 @@ const IndexPage: NextPage = () => {
       </Head>
       <Header />
       <ChantInfoList>
+        <InfoCard>Glitch 응원법에 변동 사항이 있습니다</InfoCard>
         {Store.getChantItems().map((item) => (
           <ChantInfo
             chantItem={item}
