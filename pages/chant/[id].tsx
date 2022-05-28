@@ -115,7 +115,7 @@ const CheerText = styled.div`
 const CheerBlock = styled.div<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? Color.HIGHLIGHT : Color.WHITE)};
   white-space: pre-wrap;
-  transition: color 0.1s;
+  transition: color 0.07s;
 `;
 
 const Close = styled(CloseIcon)`
