@@ -18,6 +18,8 @@ const Layout = styled.div`
 `;
 
 const Image = styled.img`
+  border-radius: 4px;
+
   ${MobileQuery} {
     width: 62px;
     height: 62px;
