@@ -1018,7 +1018,14 @@ const chantItems: ChantItem[] = [
     artist: '조유리',
     image: 'chant/yuri-waltz.png',
     video_gap: 200 / 1000,
-    point: [],
+    point: [
+      { time: 8, name: 'Verse' },
+      { time: 39, name: 'Chorus' },
+      { time: 77, name: 'Verse' },
+      { time: 108, name: 'Chr.' },
+      { time: 126, name: 'Brid.' },
+      { time: 163, name: 'Chorus' },
+    ],
     cheer: {
       '2178': ['Yeah Oh'],
       '6522': [
