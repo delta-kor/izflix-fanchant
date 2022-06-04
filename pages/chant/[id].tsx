@@ -440,6 +440,7 @@ class ChantPage extends Component<Props, State> {
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
               onClick={() => this.moveTime(this.state.teleport.go / 1000)}
             >
               {this.state.teleport.text}
