@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 import Link from 'next/link';
 import React, { Component } from 'react';
@@ -8,7 +8,7 @@ import Bar from '../../components/actions/Bar';
 import CloseIcon from '../../icons/close.svg';
 import PauseIcon from '../../icons/pause.svg';
 import PlayIcon from '../../icons/play.svg';
-import Store, { Attributes, CheerItem } from '../../store/store';
+import Store, { Attributes, CheerItem, Teleport } from '../../store/store';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import NotFoundPage from '../404';
 
@@ -146,6 +146,21 @@ const Close = styled(CloseIcon)`
   }
 `;
 
+const Teleporter = styled(motion.div)`
+  position: fixed;
+  left: 50%;
+  bottom: 128px;
+  transform: translateX(-50%);
+  padding: 12px 16px;
+  background: ${Color.DARK_GRAY};
+  font-size: 14px;
+  font-weight: 400;
+  color: ${Color.WHITE};
+  border-radius: 4px;
+  user-select: none;
+  cursor: pointer;
+`;
+
 interface IndexedCheerItem {
   index: number;
   item: CheerItem;
@@ -164,6 +179,7 @@ interface State {
   cheer: IndexedCheerItem[];
   previousCheer: IndexedCheerItem[];
   nextCheer: IndexedCheerItem[];
+  teleport: Teleport | null;
 }
 
 class ChantPage extends Component<Props, State> {
@@ -175,6 +191,7 @@ class ChantPage extends Component<Props, State> {
     cheer: [],
     previousCheer: [],
     nextCheer: [],
+    teleport: null,
   };
 
   static getInitialProps = async ({ query }) => {
@@ -216,8 +233,10 @@ class ChantPage extends Component<Props, State> {
     );
     media.src = this.props.src;
     this.mediaInterval = setInterval(() => {
-      this.setState({ current: media.currentTime });
+      const current = media.currentTime;
+      this.setState({ current });
       this.updateChant();
+      this.updateTeleport();
     }, 10);
   };
 
@@ -285,6 +304,23 @@ class ChantPage extends Component<Props, State> {
     if (next.length === 0) next.push({ index: -200, item: [' '] });
 
     this.setState({ cheer: result, previousCheer: previous, nextCheer: next });
+  };
+
+  updateTeleport = () => {
+    const item = Store.get(this.props.id);
+    if (!item) return false;
+
+    const current = this.state.current * 1000;
+
+    const teleport = item.teleport;
+    if (teleport) {
+      for (const data of teleport) {
+        if (data.from <= current && data.to >= current) {
+          return this.setState({ teleport: data });
+        }
+      }
+    }
+    this.setState({ teleport: null });
   };
 
   createCheerLine = (
@@ -396,6 +432,20 @@ class ChantPage extends Component<Props, State> {
               .map((item) => this.createCheerLine(item, current, true))}
           </AdditionalCheerContent>
         </CheerWrapper>
+
+        <AnimatePresence>
+          {this.state.teleport && (
+            <Teleporter
+              layoutId={'teleporter'}
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              onClick={() => this.moveTime(this.state.teleport.go / 1000)}
+            >
+              {this.state.teleport.text}
+            </Teleporter>
+          )}
+        </AnimatePresence>
 
         <Bar
           current={this.state.current}

@@ -9,6 +9,13 @@ type CheerItem =
   | [Symbol, string];
 type Cheer = { [key: number]: CheerItem };
 
+export interface Teleport {
+  from: number;
+  to: number;
+  go: number;
+  text: string;
+}
+
 interface ChantItem {
   id: string;
   audio_only?: boolean;
@@ -18,6 +25,7 @@ interface ChantItem {
   image: string;
   video_gap: number;
   point: { time: number; name: string }[];
+  teleport?: Teleport[];
   cheer: Cheer;
 }
 
@@ -337,6 +345,9 @@ const chantItems: ChantItem[] = [
       { time: 129, name: 'Chr.' },
       { time: 149, name: 'Brid.' },
       { time: 168, name: 'Chr.' },
+    ],
+    teleport: [
+      { from: 91315, to: 111055, go: 111056, text: '랩 파트 건너뛰기' },
     ],
     cheer: {
       '12238': ['너를 믿고 다시 한번'],
