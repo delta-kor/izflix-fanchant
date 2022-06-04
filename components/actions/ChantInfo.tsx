@@ -120,6 +120,7 @@ interface Props {
 class ChantInfo extends Component<Props> {
   render() {
     const item = this.props.chantItem;
+    console.log(item.id);
 
     return (
       <Link href={`/chant/${item.id}`}>

@@ -8,11 +8,15 @@ import Bar from '../../components/actions/Bar';
 import CloseIcon from '../../icons/close.svg';
 import PauseIcon from '../../icons/pause.svg';
 import PlayIcon from '../../icons/play.svg';
-import Store, { CheerItem } from '../../store/store';
+import Store, { Attributes, CheerItem } from '../../store/store';
 import { Color, MobileQuery, PcQuery } from '../../styles';
 import NotFoundPage from '../404';
 
 const Page = styled(motion.main)``;
+
+const Audio = styled.audio`
+  display: none;
+`;
 
 const Video = styled.video`
   position: fixed;
@@ -110,6 +114,11 @@ const CheerText = styled.div`
   font-weight: 400;
   color: ${Color.WHITE};
   white-space: pre-wrap;
+
+  &.italic {
+    font-style: italic;
+    opacity: 0.2 !important;
+  }
 `;
 
 const CheerBlock = styled.div<{ $active: boolean }>`
@@ -170,6 +179,14 @@ class ChantPage extends Component<Props, State> {
 
   static getInitialProps = async ({ query }) => {
     const id = query.id as string;
+
+    const item = Store.get(id);
+    if (!item) throw new AxiosError('페이지를 찾을 수 없어요');
+
+    if (item.audio_only) {
+      const src = `https://radio.izflix.net/stream/${id}`;
+      return { id, src };
+    }
 
     const url = `https://api.izflix.net/video/${id}?quality=1080&options=private`;
     const response = await axios.get(url, { validateStatus: null });
@@ -305,6 +322,15 @@ class ChantPage extends Component<Props, State> {
         </CheerLine>
       );
     }
+
+    if (item[0] === Attributes.ITALIC) {
+      return (
+        <CheerLine key={index} layoutId={index} {...options}>
+          <CheerText className={'italic'}>{item[1]}</CheerText>
+        </CheerLine>
+      );
+    }
+
     return (
       <CheerLine key={index} layoutId={index} {...options}>
         {item.map((block, innerIndex) => (
@@ -339,11 +365,18 @@ class ChantPage extends Component<Props, State> {
           />
         </Head>
 
-        <Video
-          // @ts-ignore
-          ref={this.mediaRef}
-          playsInline
-        />
+        {item.audio_only ? (
+          <Audio
+            //@ts-ignore
+            ref={this.mediaRef}
+          />
+        ) : (
+          <Video
+            // @ts-ignore
+            ref={this.mediaRef}
+            playsInline
+          />
+        )}
         <Cover />
 
         <CheerWrapper>

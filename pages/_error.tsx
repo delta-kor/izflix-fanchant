@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Head from 'next/head';
 import Link from 'next/link';
 import { Component } from 'react';
 import styled from 'styled-components';
@@ -76,6 +77,10 @@ class ErrorPage extends Component<Props> {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
+        <Head>
+          <title>FANCHANT - IZFLIX</title>
+          <meta property="og:title" content={'FANCHANT - IZFLIX'} />
+        </Head>
         <Content>
           <Header>
             <NotFoundIcon />
