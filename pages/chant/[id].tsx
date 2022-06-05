@@ -159,6 +159,28 @@ const Teleporter = styled(motion.div)`
   border-radius: 4px;
   user-select: none;
   cursor: pointer;
+
+  &.large {
+    ${PcQuery} {
+      bottom: calc(50% - 128px / 2 - 64px);
+      font-size: 18px;
+    }
+
+    ${MobileQuery} {
+      bottom: calc(50% - 128px / 2 - 32px);
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+
+    @media (min-width: 451px) and (max-width: 810px) {
+      bottom: calc(50% - 128px / 2 - 52px);
+      font-size: 16px;
+    }
+
+    font-weight: 800;
+    background: ${Color.HIGHLIGHT};
+    color: ${Color.WHITE};
+  }
 `;
 
 interface IndexedCheerItem {
@@ -436,12 +458,17 @@ class ChantPage extends Component<Props, State> {
         <AnimatePresence>
           {this.state.teleport && (
             <Teleporter
-              layoutId={'teleporter'}
+              key={this.state.teleport.from.toString()}
+              layoutId={this.state.teleport.from.toString()}
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => this.moveTime(this.state.teleport.go / 1000)}
+              transition={{ duration: 1 }}
+              className={this.state.teleport.go ? '' : 'large'}
+              onClick={() => {
+                if (this.state.teleport.go)
+                  this.moveTime(this.state.teleport.go / 1000);
+              }}
             >
               {this.state.teleport.text}
             </Teleporter>

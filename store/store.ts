@@ -12,7 +12,7 @@ type Cheer = { [key: number]: CheerItem };
 export interface Teleport {
   from: number;
   to: number;
-  go: number;
+  go: number | null;
   text: string;
 }
 
@@ -347,6 +347,8 @@ const chantItems: ChantItem[] = [
       { time: 168, name: 'Chr.' },
     ],
     teleport: [
+      { from: 31875 - 100, to: 34251, go: null, text: '함성' },
+      { from: 111055 - 100, to: 113488, go: null, text: '함성' },
       { from: 91315, to: 111055, go: 111056, text: '랩 파트 건너뛰기' },
     ],
     cheer: {
@@ -484,10 +486,10 @@ const chantItems: ChantItem[] = [
       '141673': ['깊어가 내 상처만'],
       '144062': ['모두 끝났어 기횐 없어'],
       '146440': ['Grrata so siempre amigo'],
-      '152579': [
-        [152579, '절'],
-        [152853, '대'],
-        [153129, '로!'],
+      '151357': [
+        [151357, '절'],
+        [151668, '대'],
+        [151957, '로!'],
       ],
       '156057': [
         [156057, '안 '],
@@ -568,21 +570,25 @@ const chantItems: ChantItem[] = [
       { time: 158, name: 'Bridge' },
       { time: 187, name: 'Outro' },
     ],
+    teleport: [
+      { from: 42485 - 300, to: 46717 - 300, go: null, text: '함성' },
+      { from: 115508 - 300, to: 119716 - 300, go: null, text: '함성' },
+    ],
     cheer: {
       '2112': [
-        [2092, '글'],
-        [2606, '리'],
-        [3039, '치 '],
-        [5626, '권'],
-        [6073, '은'],
-        [6504, '비'],
+        [1992, '글'],
+        [2506, '리'],
+        [2939, '치 '],
+        [5526, '권'],
+        [5973, '은'],
+        [6404, '비'],
       ],
-      '6804': ['I come and go ', [8297, 'come'], [8693, ' and'], [9134, ' go']],
+      '6804': ['I come and go ', [8197, 'come'], [8593, ' and'], [9034, ' go']],
       '9982': [
         'Like a glitch ',
-        [11724, 'Like'],
-        [12118, ' a '],
-        [12521, 'glitch'],
+        [11624, 'Like'],
+        [12018, ' a '],
+        [12421, 'glitch'],
       ],
       '13266': ['Yeah I’m that'],
       '14676': ['고장 난 듯이 보여도'],
@@ -773,6 +779,7 @@ const chantItems: ChantItem[] = [
       { time: 120, name: 'Brid.' },
       { time: 152, name: 'Chorus' },
     ],
+    teleport: [{ from: 148705, to: 148705 + 3000, go: null, text: '함성' }],
     cheer: {
       '6403': [
         [6403, '빛'],
@@ -1026,6 +1033,11 @@ const chantItems: ChantItem[] = [
       { time: 126, name: 'Brid.' },
       { time: 163, name: 'Chorus' },
     ],
+    teleport: [
+      { from: 57265 - 200, to: 59307, go: null, text: '함성' },
+      { from: 157028 + 3800, to: 162575 + 1000, go: null, text: '함성' },
+      { from: 179323 - 200, to: 181428, go: null, text: '함성' },
+    ],
     cheer: {
       '2178': ['Yeah Oh'],
       '6522': [
@@ -1227,6 +1239,7 @@ const chantItems: ChantItem[] = [
       { time: 120, name: 'Bridge' },
       { time: 145, name: 'Chorus' },
     ],
+    teleport: [{ from: 30591 + 500, to: 32129 + 2300, go: null, text: '함성' }],
     cheer: {
       '6959': ['울지 마 울지 마'],
       '8547': ['어린아이 같이 '],
